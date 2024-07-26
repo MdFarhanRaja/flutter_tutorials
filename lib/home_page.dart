@@ -40,9 +40,6 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'You clicked floating action button',
-                  ),
-                  Text(
                     '$count',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                     textAlign: TextAlign.center,
