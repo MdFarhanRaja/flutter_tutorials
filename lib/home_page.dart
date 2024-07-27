@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,63 +18,103 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     log('build......');
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Basic Widgets'),
-        centerTitle: false,
-        leading: Icon(Icons.deblur),
-        backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-              onPressed: () {
-                count++;
-                log('$count');
-                setState(() {});
-              },
-              icon: Icon(Icons.add)),
-          IconButton(onPressed: () {}, icon: Icon(Icons.language))
-        ],
-      ),
-      body: Center(
-          child: Container(
-              color: Colors.green[50],
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    '$count',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                    textAlign: TextAlign.center,
+        appBar: AppBar(
+          title: const Text('Basic Widgets'),
+          centerTitle: false,
+          leading: const Icon(Icons.deblur),
+          backgroundColor: Colors.white,
+          actions: [
+            Stack(
+              alignment: Alignment.topRight,
+              children: [
+                const Icon(
+                  Icons.notifications,
+                  size: 48,
+                ),
+                Container(
+                  height: 20,
+                  width: 20,
+                  alignment: Alignment.center,
+                  decoration: const BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.all(Radius.circular(50))),
+                  child: const Text(
+                    '2',
+                    style: TextStyle(color: Colors.white, fontSize: 13),
                   ),
-                  Text(
-                    'times',
+                )
+              ],
+            ),
+            const SizedBox(
+              width: 20,
+            )
+          ],
+        ),
+        body: Padding(
+            padding: const EdgeInsets.all(30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Text Field'.toUpperCase(),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                const TextField(
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20)),
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 3, 138, 52))),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20)),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 10, 113, 203))),
+                      label: Icon(Icons.person),
+                      hintText: 'Enter Name',
+                      hintStyle: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.red)),
+                ),
+                const SizedBox(height: 30),
+                const TextField(
+                    decoration: InputDecoration(
+                  prefixText: '+91 | ',
+                  prefixIcon: Icon(
+                    Icons.mobile_screen_share_rounded,
+                    color: Colors.amber,
                   ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Text.rich(
-                    TextSpan(children: [
-                      TextSpan(text: 'You clicked floating action button\n'),
-                      TextSpan(
-                        text: '$count',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 30),
-                      ),
-                      TextSpan(text: '\ntimes')
-                    ]),
-                    textAlign: TextAlign.center,
-                  )
-                ],
-              ))),
-      floatingActionButton: FloatingActionButton.large(
-          onPressed: () {
-            count++;
-            log('$count');
-            setState(() {});
-          },
-          elevation: 20,
-          tooltip: 'Click Me',
-          child: Text('Click')),
-    );
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20)),
+                      borderSide:
+                          BorderSide(color: Color.fromARGB(255, 10, 113, 203))),
+                  label: Icon(Icons.email_rounded),
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                )),
+                const SizedBox(height: 30),
+                Container(
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      border: Border.all(),
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    child: const TextField(
+                        decoration: InputDecoration(
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 20),
+                            border: InputBorder.none)))
+              ],
+            )));
   }
 }
