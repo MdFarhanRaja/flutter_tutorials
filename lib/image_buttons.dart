@@ -10,6 +10,7 @@ class ImageButtons extends StatefulWidget {
 }
 
 class _ImageButtonsState extends State<ImageButtons> {
+  int selectedValue = -1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +88,7 @@ class _ImageButtonsState extends State<ImageButtons> {
                 Image.asset(
                   'assets/images/logo.png',
                   height: 72,
-                )
+                ),
               ],
             ),
           )),
