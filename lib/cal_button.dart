@@ -4,13 +4,21 @@ class CalButton extends StatelessWidget {
   String title;
   Color? bgColor;
   Color? titleColor;
+  void Function(String val) onClick;
 
-  CalButton({required this.title, this.bgColor, this.titleColor, super.key});
+  CalButton(
+      {required this.title,
+      required this.onClick,
+      this.bgColor,
+      this.titleColor,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: () {},
+        onPressed: () {
+          onClick(title);
+        },
         style: TextButton.styleFrom(
             backgroundColor: bgColor ?? Colors.grey,
             foregroundColor: titleColor ?? Colors.black,
