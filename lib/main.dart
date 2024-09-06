@@ -1,7 +1,9 @@
 import 'package:basic_widgets/alert_dialog.dart';
 import 'package:basic_widgets/basic_calculator.dart';
 import 'package:basic_widgets/bottom_navigation.dart';
+import 'package:basic_widgets/grid_view.dart';
 import 'package:basic_widgets/image_buttons.dart';
+import 'package:basic_widgets/list_view.dart';
 import 'package:basic_widgets/radio_and_checkbox.dart';
 import 'package:basic_widgets/stack_textfield.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +24,6 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: BottomNavigationDemo());
+        home: GridViewDemo());
   }
 }
