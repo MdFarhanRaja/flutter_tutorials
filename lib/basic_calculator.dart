@@ -38,7 +38,7 @@ class _BasicCalculatorState extends State<BasicCalculator> {
                   Text(
                     result,
                     style: TextStyle(color: Colors.black, fontSize: 40),
-                  )
+                  ),
                 ],
               ),
             ),
