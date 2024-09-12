@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -12,6 +14,8 @@ class _TextFieldDemoState extends State<TextFieldDemo> {
   late TextEditingController etData;
 
   List<String> dataList = [];
+
+  List<Widget> wrapWidget = [];
 
   @override
   void initState() {
@@ -28,6 +32,7 @@ class _TextFieldDemoState extends State<TextFieldDemo> {
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextField(
                 controller: etData,
@@ -51,26 +56,50 @@ class _TextFieldDemoState extends State<TextFieldDemo> {
                     validateInputData();
                   },
                   child: const Text('Get Entered Data')),
+              const SizedBox(
+                height: 20,
+              ),
               Expanded(
-                  child: ListView.builder(
-                itemCount: dataList.length,
-                itemBuilder: (context, index) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(child: Text(dataList[index])),
-                      IconButton(
-                          onPressed: () {
-                            removeItem(index);
-                          },
-                          icon: const Icon(
-                            Icons.close,
-                            color: Colors.red,
-                          ))
-                    ],
-                  );
-                },
-              ))
+                  child: SingleChildScrollView(
+                      child: Wrap(
+                          spacing: 10,
+                          runSpacing: 20,
+                          children: List.generate(
+                            wrapWidget.length,
+                            (index) {
+                              return Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
+                                  color: Colors.primaries[Random()
+                                      .nextInt(Colors.primaries.length)],
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Flexible(child: wrapWidget[index]),
+                                      IconButton(
+                                          onPressed: () {
+                                            removeItem(index);
+                                          },
+                                          icon: Icon(Icons.delete))
+                                    ],
+                                  ));
+                            },
+                          ))))
+
+              /*  Wrap(
+                  spacing: 10,
+                  runSpacing: 20,
+                  children: List.generate(
+                    10,
+                    (index) {
+                      return Container(
+                        color: Colors.primaries[
+                            Random().nextInt(Colors.primaries.length)],
+                        width: 64,
+                        height: 34,
+                      );
+                    },
+                  )) */
             ],
           ),
         ));
@@ -91,13 +120,14 @@ class _TextFieldDemoState extends State<TextFieldDemo> {
     if (etData.text.isEmpty) {
       showToast('Kindly enter any data');
     } else {
-      dataList.add(etData.text);
+      //dataList.add(etData.text);
+      wrapWidget.add(Text(etData.text, style: TextStyle(color: Colors.white)));
       setState(() {});
     }
   }
 
   void removeItem(int index) {
-    dataList.removeAt(index);
+    wrapWidget.removeAt(index);
     setState(() {});
   }
 }
