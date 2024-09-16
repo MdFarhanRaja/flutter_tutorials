@@ -1,4 +1,7 @@
+import 'package:basic_widgets/base_class.dart';
 import 'package:flutter/material.dart';
+
+import 'app_utils.dart';
 
 class Page2 extends StatefulWidget {
   String name;
@@ -8,19 +11,28 @@ class Page2 extends StatefulWidget {
   State<Page2> createState() => _Page2State();
 }
 
-class _Page2State extends State<Page2> {
+class _Page2State extends BaseClass<Page2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.name),
-      ),
+      appBar: getAppBar(title: widget.name),
       body: Center(
-          child: ElevatedButton(
+          child: Column(
+        children: [
+          const Text('Welcome to Flutter!'),
+          getVerticalGap(gapHeight: 70),
+          Image.asset(
+            'assets/logo.png',
+            height: 64,
+          ),
+          getVerticalGap(gapHeight: 70),
+          ElevatedButton(
               onPressed: () {
-                Navigator.pop(context, 'Farhan');
+                Navigator.pop(context, 'Md Farhan');
               },
-              child: Text('Send Data to Page 1'))),
+              child: Text('Send Data to Page 1')),
+        ],
+      )),
     );
   }
 }
