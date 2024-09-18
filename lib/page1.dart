@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:basic_widgets/app_prefs.dart';
 import 'package:basic_widgets/app_utils.dart';
 import 'package:basic_widgets/base_class.dart';
 import 'package:basic_widgets/page2.dart';
@@ -25,25 +26,27 @@ class _Page1State extends BaseClass<Page1> {
             child: Column(
           children: [
             Text('Welcome to Flutter!', style: regularStyle(fontSize: 30)),
-            getVerticalGap(gapHeight: 70),
             Image.asset(
               'assets/logo.png',
-              height: 64,
+              height: 94,
             ),
-            getVerticalGap(gapHeight: 70),
-            ElevatedButton(
-                onPressed: () {
-                  gotoNextPage();
-                },
-                child: Text(
-                  'Goto Page 2',
-                  style: regularStyle(fontSize: 10, fontColor: Colors.red),
-                )),
+            Expanded(
+                child: Center(
+              child: ElevatedButton(
+                  onPressed: () {
+                    gotoNextPage();
+                  },
+                  child: Text(
+                    'Login',
+                    style: regularStyle(fontSize: 18, fontColor: Colors.green),
+                  )),
+            ))
           ],
         )));
   }
 
   void gotoNextPage() async {
+    AppPrefs().setIsLogin(true);
     final result = await gotoNext(Page2('Md'));
     if (result != null) {
       log(result.toString());

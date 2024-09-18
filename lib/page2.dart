@@ -1,4 +1,6 @@
+import 'package:basic_widgets/app_prefs.dart';
 import 'package:basic_widgets/base_class.dart';
+import 'package:basic_widgets/page1.dart';
 import 'package:flutter/material.dart';
 
 import 'app_utils.dart';
@@ -31,6 +33,13 @@ class _Page2State extends BaseClass<Page2> {
                 Navigator.pop(context, 'Md Farhan');
               },
               child: Text('Send Data to Page 1')),
+          getVerticalGap(gapHeight: 20),
+          ElevatedButton(
+              onPressed: () {
+                AppPrefs().logoutUser();
+                gotoNext(Page1());
+              },
+              child: Text('Logout')),
         ],
       )),
     );
