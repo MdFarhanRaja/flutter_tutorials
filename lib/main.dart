@@ -1,26 +1,22 @@
-import 'dart:developer';
-
-import 'package:basic_widgets/app_prefs.dart';
 import 'package:basic_widgets/page1.dart';
 import 'package:basic_widgets/page2.dart';
+import 'package:basic_widgets/provider/counter_provider.dart';
+import 'package:basic_widgets/provider_demo.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final v = await AppPrefs().isLoggedin();
-  log(v.toString());
-  runApp(MainApp(v));
-/*   if (v) {
-    runApp(Home());
-  } else {
-    runApp(Login());
-  } */
-  //runApp(v == true ? Home() : Login());
+  runApp(runWithProvider());
+}
+
+runWithProvider() {
+  return MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => CounterProvider())
+  ], child: MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  bool isLoggedIn;
-  MainApp(this.isLoggedIn, {super.key});
+  MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +27,7 @@ class MainApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: isLoggedIn == true ? Page2('Farhan') : Page1());
+        home: ProviderDemo());
   }
 }
 
