@@ -2,6 +2,7 @@ import 'package:basic_widgets/page1.dart';
 import 'package:basic_widgets/page2.dart';
 import 'package:basic_widgets/provider/counter_provider.dart';
 import 'package:basic_widgets/provider_demo.dart';
+import 'package:basic_widgets/rest_api_demo.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,7 @@ class MainApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: ProviderDemo());
+        home: RestApiDemo());
   }
 }
 
