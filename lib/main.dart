@@ -1,6 +1,8 @@
+import 'package:basic_widgets/grid_view.dart';
 import 'package:basic_widgets/page1.dart';
 import 'package:basic_widgets/page2.dart';
 import 'package:basic_widgets/provider/counter_provider.dart';
+import 'package:basic_widgets/provider/photos_provider.dart';
 import 'package:basic_widgets/provider_demo.dart';
 import 'package:basic_widgets/rest_api_demo.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +14,8 @@ void main() async {
 
 runWithProvider() {
   return MultiProvider(providers: [
-    ChangeNotifierProvider(create: (context) => CounterProvider())
+    ChangeNotifierProvider(create: (context) => CounterProvider()),
+    ChangeNotifierProvider(create: (context) => PhotosProvider())
   ], child: MainApp());
 }
 
@@ -28,7 +31,7 @@ class MainApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: RestApiDemo());
+        home: GridViewDemo());
   }
 }
 
