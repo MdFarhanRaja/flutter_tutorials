@@ -24,7 +24,8 @@ class _GridViewDemoState extends BaseClass<GridViewDemo> {
     photosProvider.getPhotos();
     controller.addListener(() {
       if ((controller.position.pixels == controller.position.maxScrollExtent) &&
-          !photosProvider.isLoading) {
+          !photosProvider.isLoading &&
+          photosProvider.pagingEnabled) {
         photosProvider.getPhotos(isNextPage: true);
       }
     });
@@ -54,6 +55,18 @@ class _GridViewDemoState extends BaseClass<GridViewDemo> {
                   return p.isLoading;
                 },
               ),
+              Selector<PhotosProvider, String>(
+                builder: (context, value, child) {
+                  if (value.isNotEmpty) {
+                    return Center(child: Text(value));
+                  } else {
+                    return Container();
+                  }
+                },
+                selector: (p0, p) {
+                  return p.errorMsgs;
+                },
+              ),
               Expanded(child: Consumer<PhotosProvider>(
                 builder: (context, p, child) {
                   return GridView.builder(
@@ -67,14 +80,26 @@ class _GridViewDemoState extends BaseClass<GridViewDemo> {
                             crossAxisSpacing: 10),
                     itemBuilder: (context, index) {
                       final item = p.photos[index];
-                      return ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        child: Image.network(
-                          item.urls?.smallS3 ?? '',
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                        ),
+                      return Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                            child: Image.network(
+                              item.urls?.smallS3 ?? '',
+                              fit: BoxFit.cover,
+                              height: double.infinity,
+                              width: double.infinity,
+                            ),
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                photosProvider.likeUnlikePhoto(index);
+                              },
+                              icon: Icon(Icons.favorite_rounded,
+                                  color: item.likedByUser! ? Colors.red : null))
+                        ],
                       );
                     },
                   );

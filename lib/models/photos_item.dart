@@ -6,6 +6,17 @@ class PhotosItem {
   int? likes;
   bool? likedByUser;
 
+  bool get isLiked => likedByUser ?? false;
+
+  bool isLikedByUser() {
+/*     if (likedByUser != null) {
+      return likedByUser!;
+    } else {
+      return false;
+    } */
+    return likedByUser ?? false;
+  }
+
   PhotosItem(
       {this.id,
       this.description,
