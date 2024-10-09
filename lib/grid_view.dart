@@ -21,7 +21,8 @@ class _GridViewDemoState extends BaseClass<GridViewDemo> {
     controller = ScrollController();
     photosProvider = Provider.of<PhotosProvider>(context, listen: false);
     WidgetsFlutterBinding.ensureInitialized();
-    photosProvider.getPhotos();
+    photosProvider.getPhotosNew();
+
     controller.addListener(() {
       if ((controller.position.pixels == controller.position.maxScrollExtent) &&
           !photosProvider.isLoading &&

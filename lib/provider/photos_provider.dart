@@ -1,14 +1,31 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:basic_widgets/network/api_call.dart';
+import 'package:basic_widgets/network/api_constants.dart';
+import 'package:basic_widgets/network/api_response.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../models/photos_item.dart';
 
-class PhotosProvider extends ChangeNotifier {
+class PhotosProvider extends ChangeNotifier implements ApiResponse {
   int perPage = 20, currentPage = 1;
   List<PhotosItem> photos = [];
   bool isLoading = true, pagingEnabled = true;
   String errorMsgs = '';
+
+  void getPhotosNew() {
+    ApiCall.makeApiCall(
+        ApiConstants.GET_PHOTOS, Method.GET, this, ApiName.GET_PHOTOS);
+  }
+
+  void likePhotoNew(int index) {
+    final photoId = photos[index].id!;
+    ApiCall.makeApiCall(
+        ApiConstants.LIKE_UNLIKE_PHOTO.replaceFirst("%s", photoId),
+        Method.POST,
+        this,
+        ApiName.LIKE_PHOTO);
+  }
 
   void getPhotos({bool isNextPage = false}) async {
     if (isNextPage) {
@@ -108,7 +125,36 @@ class PhotosProvider extends ChangeNotifier {
     } else {
       //photos[index].likedByUser = true;
       //notifyListeners();
-      likePhoto(index);
+      likePhotoNew(index);
+    }
+  }
+
+  @override
+  void onError(dynamic errorMsg, ApiName apiName) {
+    log("onError:> ${errorMsg.toString()}");
+  }
+
+  @override
+  void onResponse(dynamic apiResponse, ApiName apiName) {
+    switch (apiName) {
+      case ApiName.GET_PHOTOS:
+        log("onResponse $apiName:> ${apiResponse.toString()}");
+        final photoItems = apiResponse as List<dynamic>;
+        final items = photoItems.map((e) => PhotosItem.fromJson(e)).toList();
+        items.removeAt(0);
+        items.removeAt(1);
+        if (items.length < perPage) {
+          pagingEnabled = false;
+        }
+        photos.addAll(items);
+        isLoading = false;
+        notifyListeners();
+        break;
+      case ApiName.LIKE_PHOTO:
+        log("onResponse $apiName:> ${apiResponse.toString()}");
+        break;
+      case ApiName.UNLIKE_PHOTO:
+        break;
     }
   }
 }
